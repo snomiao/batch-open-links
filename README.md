@@ -1,4 +1,4 @@
-# Page Flood
+# Batch Open Links
 
 A userscript that helps you batch open links from the main list on any webpage. Perfect for quickly exploring Google search results or visiting all detail pages in a list.
 
@@ -13,12 +13,13 @@ A userscript that helps you batch open links from the main list on any webpage. 
 ## Installation
 
 1. Install a userscript manager (e.g., [Tampermonkey](https://www.tampermonkey.net/), [Violentmonkey](https://violentmonkey.github.io/))
-2. Install the script from [Greasy Fork](https://greasyfork.org/scripts/528027)
+2. **[Click here to install](https://update.greasyfork.org/scripts/528027/Page%20Flood.user.js)** or install from [Greasy Fork](https://greasyfork.org/scripts/528027)
 3. The script will automatically run on all websites
 
 ## Usage
 
 Press **Shift + Alt + Q** on any webpage to:
+
 1. Automatically detect the main list of links
 2. See a confirmation dialog with the URLs to be opened
 3. Open the links in new tabs (in batches of 8)
@@ -26,6 +27,7 @@ Press **Shift + Alt + Q** on any webpage to:
 ## How It Works
 
 The script uses a Bag-of-Words model to analyze link features including:
+
 - CSS class names
 - HTML attributes
 - Link structure and similarity
@@ -34,9 +36,8 @@ It then groups similar links, scores the groups, and identifies the most relevan
 
 ## Version
 
-Current version: 2.1.2
+Current version: 2.2.0
 
 ## Author
 
 snomiao@gmail.com
-

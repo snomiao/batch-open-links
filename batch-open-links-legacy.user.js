@@ -20,7 +20,7 @@ function main() {
       // e.altKey && getMainListLinks()
       if (e.shiftKey && e.altKey && e.code == "KeyQ") await openLinksInList();
     },
-    { signal: ac.signal }
+    { signal: ac.signal },
   );
 }
 
@@ -51,24 +51,24 @@ function elpath(e, path = "") {
   return !e
     ? path.trim()
     : e.tagName.match(/^h\d$/i)
-    ? e.tagName
-    : elpath(
-        e.parentElement,
-        e.tagName +
-          [...e.classList]
-            .filter((e) => e.match(/^[a-z-]+$/))
-            .map((e) => "." + e)
-            .join("") +
-          " " +
-          path
-      );
+      ? e.tagName
+      : elpath(
+          e.parentElement,
+          e.tagName +
+            [...e.classList]
+              .filter((e) => e.match(/^[a-z-]+$/))
+              .map((e) => "." + e)
+              .join("") +
+            " " +
+            path,
+        );
 }
 // const elpath = function elpath(e){return !e?'': (elpath(e.parentElement) + ' ' + e.tagName).trim('')}
 function getDuplicates(list) {
   return new Set(
     Object.entries(Object.groupBy(list, (e) => e)).flatMap(([text, list]) =>
-      text && list.length > 1 ? [text] : []
-    )
+      text && list.length > 1 ? [text] : [],
+    ),
   );
 }
 function getExcludeFilter(set, fn) {
@@ -76,22 +76,17 @@ function getExcludeFilter(set, fn) {
 }
 function removeDuplicateLinks(links) {
   return links.filter(
-    getExcludeFilter(
-      getDuplicates(links.map((e) => e.textContent)),
-      (e) => e.href
-    )
+    getExcludeFilter(getDuplicates(links.map((e) => e.textContent)), (e) => e.href),
   );
 }
 function getLinkGroups() {
   return Object.groupBy(
-    removeDuplicateLinks(
-      $$("a").map((e) => (false && (e.style.background = "green"), e))
-    ),
-    (e) => elpath(e)
+    removeDuplicateLinks($$("a").map((e) => (false && (e.style.background = "green"), e))),
+    (e) => elpath(e),
   );
 }
 function peekLog(e) {
-  return console.log(e), e;
+  return (console.log(e), e);
 }
 function groupEncolor([path, links]) {
   return (
@@ -100,7 +95,7 @@ function groupEncolor([path, links]) {
         Math.random().toString(16).slice(2, 8).padStart(6, "0") +
         Math.floor(256 * 0.995 ** path.length)
           .toString(16)
-          .padStart(2, "0")
+          .padStart(2, "0"),
     ),
     peekLog([path, links])
   );
@@ -120,23 +115,17 @@ function getLinksLists() {
 }
 
 function getMainListLinks() {
-  return getLinksLists()[0].list.map(
-    (e) => (false && (e.style.background = "yellow"), e)
-  );
+  return getLinksLists()[0].list.map((e) => (false && (e.style.background = "yellow"), e));
 }
 
 async function openLinks(links) {
   // max 8 page on 1 origin once batch
   // max 16 page on all origin once batch
-  const urlss = Object.values(
-    Object.groupBy(links, (url, i) => String(Math.floor(i / 8)))
-  );
+  const urlss = Object.values(Object.groupBy(links, (url, i) => String(Math.floor(i / 8))));
   for await (const urls of urlss) {
     urls.toReversed().map(openDeduplicatedUrl);
     await new Promise((r) => setTimeout(r, 1e3)); // 1s cd
-    await new Promise((r) =>
-      document.addEventListener("visibilitychange", r, { once: true })
-    ); // wait for page visible
+    await new Promise((r) => document.addEventListener("visibilitychange", r, { once: true })); // wait for page visible
   }
   // await Promise.all(Object.entries(Object.groupBy(links, e => e.origin)).map(async ([origin, links]) => {
   //   const urls = links.map(e => e.href)
