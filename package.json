@@ -1,0 +1,15 @@
+{
+  "name": "batch-open-links",
+  "version": "2.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:ext": "node scripts/build-extension.mjs",
+    "publish:ext": "node scripts/publish-extension.mjs"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1",
+    "chrome-webstore-upload": "^3.0.4",
+    "sharp": "^0.33.5"
+  }
+}
