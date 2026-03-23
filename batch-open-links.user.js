@@ -22,7 +22,7 @@
 // @name:id            Buka tautan secara massal
 //
 // @namespace          snomiao@gmail.com
-// @version            2.2.0
+// @version            2.3.0
 // @author             snomiao@gmail.com
 //
 // @description        Press Shift+Alt+Q to batch open links in the main list on a page. Handy for exploring all search engine results or detail pages in a list page.
