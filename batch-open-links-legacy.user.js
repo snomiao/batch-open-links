@@ -26,7 +26,8 @@ function main() {
 
 function openDeduplicatedUrl(url) {
   const opened = (globalThis.openDeduplicatedUrl_opened ??= new Set());
-  return opened.has(url) || (window.open(url, "_blank") && opened.add(url));
+  const urlWithHash = url.includes("#") ? url : url + "#";
+  return opened.has(url) || (window.open(urlWithHash, url) && opened.add(url));
 }
 
 async function openLinksInList() {
