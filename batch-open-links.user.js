@@ -57,7 +57,7 @@
 // ==/UserScript==
 
 /**
- * Page Flood - Batch open links from the dominant list on any page.
+ * Batch Open Links (previously known as Page Flood) - Batch open links from the dominant list on any page.
  *
  * Algorithm:
  * 1. Collect all anchor elements on the page

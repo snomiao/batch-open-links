@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Page Flood
+// @name        Batch Open Links (previously Page Flood)
 // @namespace   snomiao@gmail.com
 // @match       http://*/*
 // @match       https://*/*

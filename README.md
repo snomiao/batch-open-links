@@ -1,5 +1,7 @@
 # Batch Open Links
 
+> Previously known as **Page Flood**.
+
 A userscript that helps you batch open links from the main list on any webpage. Perfect for quickly exploring Google search results or visiting all detail pages in a list.
 
 ## Features
@@ -36,7 +38,7 @@ It then groups similar links, scores the groups, and identifies the most relevan
 
 ## Version
 
-Current version: 2.2.0
+Current version: 2.3.0
 
 ## Author
 
