@@ -182,8 +182,8 @@ async function sleep(ms) {
  */
 function openDeduplicatedUrl(url) {
   const opened = (window.openDeduplicatedUrl_opened ??= new Set());
-  const urlWithHash = url.includes("#") ? url : url + "#";
-  return opened.has(url) || (open(urlWithHash, url) && opened.add(url));
+  // const urlWithHash = url.includes("#") ? url : url + "#";
+  return opened.has(url) || (open(url, url) && opened.add(url));
 }
 /**
  * Opens a URL by programmatically clicking a dynamically created anchor element.
