@@ -22,7 +22,7 @@
 // @name:id            Buka tautan secara massal
 //
 // @namespace          snomiao@gmail.com
-// @version            2.3.0
+// @version            2.4.0
 // @author             snomiao@gmail.com
 //
 // @description        Press Shift+Alt+Q to batch open links in the main list on a page. Handy for exploring all search engine results or detail pages in a list page.
@@ -155,19 +155,54 @@ function hotkeys(m) {
  * Opens a list of URLs in batches of 8, with user confirmation for each batch.
  * Waits for the user to return to the current tab before opening the next batch.
  *
- * @param {string[]} links - Array of URLs to open.
+ * @param {HTMLAnchorElement[]} links - Links to open.
  * @returns {Promise<void>}
- * @throws Alerts and throws if the user cancels a batch.
  */
 async function openLinks(links) {
   const urlss = Object.values(Object.groupBy(links, (url, i) => String(Math.floor(i / 8))));
   for await (const urls of urlss) {
     const urlList = urls.join("\n");
     const confirmMsg = `confirm to open ${urls.length} pages?\n\n${urlList}`;
-    if (!confirm(confirmMsg)) throw alert("cancelled by user");
+    if (!confirm(confirmMsg)) {
+      if (confirm("Cancelled to open, do u want copy the full list of links (in markdown format)?")) {
+        const markdown = links.map((link) => {
+          const title = (link.textContent?.trim() || link.href)
+            .replace(/\s+/g, " ")
+            .replace(/[\\\[\]]/g, "\\$&");
+          return `- [${title}](<${link.href.replaceAll(">", "%3E")}>)`;
+        }).join("\n");
+        try {
+          await copyText(markdown);
+        } catch (error) {
+          alert(`Could not copy the links: ${error.message}`);
+        }
+      }
+      return;
+    }
     urls.toReversed().map(openDeduplicatedUrl);
     await sleep(1e3); // 1s cd
     await new Promise((r) => document.addEventListener("visibilitychange", r, { once: true })); // wait for page visible
+  }
+}
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (_) {
+      // Fall back for pages where the Clipboard API is unavailable or denied.
+    }
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  try {
+    if (!document.execCommand("copy")) throw new Error("clipboard access was denied");
+  } finally {
+    textarea.remove();
   }
 }
 async function sleep(ms) {
