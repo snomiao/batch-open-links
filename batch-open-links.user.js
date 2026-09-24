@@ -169,7 +169,7 @@ async function openLinks(links) {
           const title = (link.textContent?.trim() || link.href)
             .replace(/\s+/g, " ")
             .replace(/[\\\[\]]/g, "\\$&");
-          return `- [${title}](<${link.href.replaceAll(">", "%3E")}>)`;
+          return `- [${title}]( ${link.href.replaceAll(">", "%3E")} )`;
         }).join("\n");
         try {
           await copyText(markdown);

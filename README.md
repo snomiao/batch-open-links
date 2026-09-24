@@ -1,4 +1,4 @@
-# Batch Open Links
+f# Batch Open Links
 
 > Previously known as **Page Flood**.
 

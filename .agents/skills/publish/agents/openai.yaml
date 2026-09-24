@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish userscript"
+  short_description: "Release the userscript to GitHub and Greasy Fork"
+  default_prompt: "Use $publish to validate, push, and prepare a Greasy Fork release."
